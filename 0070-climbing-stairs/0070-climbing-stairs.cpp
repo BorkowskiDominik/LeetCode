@@ -1,5 +1,6 @@
 class Solution {
 public:
+    // dynamic programming with array
     int climbStairs_DP(int n) {
         vector<int> stairs(n+2);
         stairs[0]=1;
@@ -10,6 +11,7 @@ public:
         }
         return stairs[n];
     }
+    // dynamic programming with iterative way
     int climbStairs(int n) {
         if (n <= 1)
             return 1;
