@@ -12,27 +12,28 @@ class Solution {
 public:
     ListNode* rotateRight(ListNode* head, int k) {
         if (!head || !head->next || k == 0) return head;
-        ListNode *new_end, *ptr=head->next;
+        ListNode *last=head;
         
         int list_len = 1;
         
-        while (ptr!=head) {
-            if (!ptr->next) {
-                ptr->next = head;
-                new_end = ptr;
-            }
+        // find last and calc size
+        while (last->next) {
+            last = last->next;
             list_len++;
-            ptr = ptr->next;
         }
+    
+        // create cycle
+        last->next = head; 
 
         int rotations = list_len - (k % list_len);
         while (rotations) {
-            new_end=new_end->next;
+            last = last->next;
             rotations--;
         }
 
-        head = new_end->next;
-        new_end->next = nullptr;
+        // break cycle
+        head = last->next;
+        last->next = nullptr;
         return head;
     }
 };
