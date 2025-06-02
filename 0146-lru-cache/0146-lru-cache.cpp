@@ -45,7 +45,6 @@ public:
             n = it->second;
         } else {
             if(_mapping.size() == _capacity) {
-                cout << "key: " << key << " : " << value << endl;
                 auto node = _mapping.extract(tail->key);
                 node.key() = key;
                 n = node.mapped();
