@@ -1,6 +1,5 @@
 class Solution {
     using Vector2DChar = vector<vector<char>>;
-    using Iterator = vector<char>::iterator;
 
     class MapIterator {
         protected:
@@ -9,15 +8,16 @@ class Solution {
             virtual void _move_cursor() = 0;
         public:
             MapIterator(const Vector2DChar& map, std::pair<int, int> pos = {-1, -1}): _map(map), _pos(pos) {}
-            virtual char next() {
+            virtual optional<char> next() {
                 if(_pos.first < _map.size() && _pos.second < _map[_pos.first].size())
                 {
                     char result = _map[_pos.first][_pos.second];
                     _move_cursor();
                     return result;
                 }
-                return '\0';
+                return nullopt;
             }
+            virtual ~MapIterator() = default;
     };
 
     class RowIterator : public MapIterator {
@@ -57,16 +57,15 @@ class Solution {
     };
 
     bool _verify(MapIterator& it) {
-        std::bitset<10> pattern(0);
-        char value;
-        while((value = it.next())) {
-            if (value=='.') {
+        std::bitset<10> seen(0);
+        while(auto value = it.next()) {
+            if (*value=='.') {
                 continue;
             }
-            int i = value - '0';
-            if (pattern[i])
+            int digit = *value - '0';
+            if (seen[digit])
                 return false;
-            pattern[i] = true;
+            seen[digit] = true;
         }
         return true;
     }
@@ -102,8 +101,6 @@ class Solution {
 
 public:
     bool isValidSudoku(Vector2DChar& board) {
-        if (_verify_rows(board) && _verify_cols(board) && _verify_squares(board))
-            return true;
-        return false;
+         return _verify_rows(board) && _verify_cols(board) && _verify_squares(board);
     }
 };
