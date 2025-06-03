@@ -13,22 +13,17 @@ ostream& operator<<(ostream& o, const TPoint<T>& p);
 class Solution {
     using TMatrix = vector<vector<int>>;
 
-    Point _rotate(Point p) {
-        if (!_matrix) return p;
-        
+    Point _rotate(Point p) {      
         double new_x = _center.x + p.y - _center.y;
         double new_y = _center.y - p.x + _center.x;
         return {static_cast<int>(new_x), static_cast<int>(new_y)};
     };
 
-    TMatrix* _matrix;
-    int _size;
     TPoint<double> _center;
 
 public:    
     void rotate(TMatrix& matrix) {
-        _matrix = &matrix;
-        _size = _matrix->size();
+        int _size = matrix.size();
         _center = { (_size-1)/ 2.0, (_size-1) / 2.0 };
         for (int i = 0; i < _size; ++i) {
             for (int j = i; j < _size-i-1; ++j) {
@@ -42,7 +37,6 @@ public:
                 }
             }
         }
-        _matrix = nullptr;
     }
 
 };
