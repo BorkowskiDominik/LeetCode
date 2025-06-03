@@ -1,15 +1,15 @@
 class Solution {
-    static const std::unordered_map<char, char> _map;
-    static const std::string open_brackets;
+    inline static const std::unordered_map<char, char> close_to_open = {
+        {')', '('}, {']', '['}, {'}', '{'}
+    };
 public:
     bool isValid(string s) {
         std::stack<char> stack;
-        for (char c: s) {
-            if (open_brackets.find(c) != string::npos) { // open bracket
+        for (char c : s) {
+            if (c == '(' || c == '[' || c == '{') {
                 stack.push(c);
-            }
-            else { //close bracket
-                if (stack.empty() || (stack.top() != _map.at(c)))
+            } else {
+                if (stack.empty() || stack.top() != close_to_open.at(c))
                     return false;
                 stack.pop();
             }
@@ -17,7 +17,3 @@ public:
         return stack.empty();
     }
 };
-
-
-const std::unordered_map<char, char> Solution::_map = {{ ')', '(' }, { '}', '{' }, { ']', '[' }};
-const std::string Solution::open_brackets = "{([";
