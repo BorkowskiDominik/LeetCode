@@ -8,17 +8,15 @@ public:
         string word;
 
         for (char c : pattern) {
-            if(is.eof())
-                return false;
-            is >> word;
-            if ( !_l_to_word[c].empty() && _l_to_word[c] != word )
-                return false;
-            auto it = _word_to_l.find(word);
-            if (it != _word_to_l.end() && it->second != c)
-                return false;
+            if(!(is >> word))   return false;
+
+            if (!_l_to_word[c].empty() && _l_to_word[c] != word )  return false;
+            if (_word_to_l.contains(word) && _word_to_l[word] != c) return false;
+
             _l_to_word[c] = word;
             _word_to_l[word] = c;
         }
-        return is.eof();
+        string extra;
+        return !(is >> extra);
     }
 };
