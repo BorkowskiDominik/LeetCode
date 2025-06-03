@@ -28,16 +28,14 @@ public:
     void setZeroes(vector<vector<int>>& matrix) {
         std::vector<int>& first_row = matrix.front();
         int rows = matrix.size(), cols = first_row.size();
-        bool first_row_zero = false, first_col_zero = false;
 
-        first_row_zero = std::find(first_row.begin(), first_row.end(), 0) != first_row.end();
+        bool first_row_zero = std::any_of(matrix[0].begin(), matrix[0].end(),
+                                    [](int val) { return val == 0; });
 
-        for (int j = 0; j < rows; ++j) {
-            if (0 == matrix[j][0]) {
-                first_col_zero = true;
-                break;
-            }
-        }
+        bool first_col_zero = std::any_of(matrix.begin(), matrix.end(),
+                                      [](const std::vector<int>& row) { return row[0] == 0; });
+
+
         // mark rows and cols to zero
         for (int i = 1; i < rows; ++i) {
             for (int k = 1; k < cols; ++k) {
@@ -47,14 +45,15 @@ public:
                 }
             }
         }
-        //clear rows
-        for_each( matrix.begin()+1, matrix.end(),
-            [&](vector<int> & row){
-                if (0 == row[0]) std::fill(row.begin()+1, row.end(), 0); 
-            }
-        );
 
-        // clear cols
+        // Zero marked rows
+        for (int i = 1; i < rows; ++i) {
+            if (matrix[i][0] == 0) {
+                std::fill(matrix[i].begin() + 1, matrix[i].end(), 0);
+            }
+        }
+
+        // Zero out marked columns
         for (int c = 1; c < cols; ++c) {
             if (0 == matrix[0][c]) {
                 for (int k = 1; k < rows; ++k)
@@ -68,9 +67,8 @@ public:
         
         // clear first column if needed
         if (first_col_zero) {
-            for (int c = 0; c < rows; ++c) {
-                matrix[c][0] = 0;
-            }
+            for (auto& row : matrix)
+                row[0] = 0;
         }
     }
 };
