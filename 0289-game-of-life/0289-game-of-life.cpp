@@ -34,6 +34,7 @@ void Solution::gameOfLife(TVectInt& board) {
     _board_size = {0, 0};
 }
 
+[[maybe_unused]]
 void Solution::_normalize(int& r, int& c) {
     if (r < 0) r = _board_size.first - 1;
     else if (r >= _board_size.first ) r = 0;
@@ -41,6 +42,7 @@ void Solution::_normalize(int& r, int& c) {
     else if (c >= _board_size.second ) c = 0;
 }
 
+[[maybe_unused]]
 bool Solution::_is_valid_cell(int r, int c) {
     return  r >= 0                  &&
             r < _board_size.first   &&
