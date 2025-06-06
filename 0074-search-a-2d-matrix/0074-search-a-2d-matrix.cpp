@@ -4,7 +4,7 @@ public:
         int rows = matrix.size();
         int cols = matrix[0].size();
         int left = 0, right = rows * cols - 1;
-
+        //we treat matrix as long 1D array and perform classical binary search
         while (left <= right) {
             int mid = (left + right) / 2;
             int value = matrix[mid / cols][mid % cols];
