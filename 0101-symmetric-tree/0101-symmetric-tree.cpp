@@ -27,6 +27,6 @@ public:
             lq.push(l->left);
             lq.push(r->right);
         }
-        return lq.empty();
+        return true;
     }
 };
