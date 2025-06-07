@@ -11,6 +11,7 @@
  */
 class Solution {
 public:
+    // recursion version
     int maxDepth(TreeNode* root) {
         if (!root)
             return 0;
