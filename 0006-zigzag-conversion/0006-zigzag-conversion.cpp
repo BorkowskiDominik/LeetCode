@@ -21,15 +21,15 @@ public:
         
         for (int i = 0; i < numRows; ++i) {
             int p = i;
-            std::optional<int> offset;
+            int offset = 0;
             if (i != 0 && i != numRows-1)
                 offset = delta - 2*i;
 
             while (p < s.size()) {
                 result[result_index++] = s[p];
                 if (offset) {
-                    if (p + *offset < s.size()){
-                        result[result_index++] = s[p+*offset];
+                    if (p + offset < s.size()){
+                        result[result_index++] = s[p+offset];
                     }
                 }
                 p += delta;
