@@ -10,14 +10,12 @@ public:
         if (ratings.size() == 1) return 1;
         if (ratings.size() == 2) return ratings[0] == ratings[1] ? 2 : 3;
 
-        std::vector<int> candies(ratings.size());
+        std::vector<int> candies(ratings.size(), 1);
 
         candies[0] = 1;
         for (int r = 1; r < ratings.size(); r++) {
             if (ratings[r] > ratings[r-1])
                 candies[r] = candies[r-1] + 1;
-            else
-                candies[r] = 1;
         }
 
         for (int r = ratings.size()-2; r >= 0; r--) {
