@@ -17,7 +17,7 @@ public:
         line += *s;
         ++s;
         while (s != e) {
-            line += std::string(spaces + (reminder ? 1 : 0) , ' ');
+            line.append(spaces + (reminder ? 1 : 0), ' ');
             line += *s;
             ++s;
             if (reminder)
@@ -43,7 +43,8 @@ public:
             else { // last line -> no justification
                 std::string line {*it_first};
                 while (++it_first != it_last) {
-                    line += " " + *it_first;
+                    line += ' ';
+                    line += *it_first;
                 }
                 line += std::string(maxWidth - line.size(), ' ');
                 result.push_back(std::move(line));
