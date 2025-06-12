@@ -37,14 +37,14 @@ public:
             
             // commit line
             if (it_last != words.end()) 
-                result.push_back(merge_line(it_first, it_last, maxWidth));
+                result.push_back(std::move(merge_line(it_first, it_last, maxWidth)));
             else { // last line -> no justification
                 std::string line {*it_first};
                 while (++it_first != it_last) {
                     line += " " + *it_first;
                 }
                 line += std::string(maxWidth - line.size(), ' ');
-                result.push_back(line);
+                result.push_back(std::move(line));
             }
             it_first = it_last++;
         }
