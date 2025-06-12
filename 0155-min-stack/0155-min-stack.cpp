@@ -4,9 +4,7 @@ class MinStack {
     // second -> minimal value at this level
     std::stack<std::pair<int, int>> _stack {};
 public:
-    MinStack() {
-        
-    }
+    MinStack() {}
     
     void push(int val) {
         if (_stack.empty()) {
@@ -14,7 +12,6 @@ public:
         } else {
             _stack.emplace(val, std::min(val, _stack.top().second));
         }
-
     }
     
     void pop() {
