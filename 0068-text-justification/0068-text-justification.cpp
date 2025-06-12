@@ -12,16 +12,18 @@ public:
         int spaces = total_spaces / (words - 1);
         int reminder = total_spaces - spaces * (words - 1);
 
-        std::ostringstream oss;
-        oss << *s;
+        std::string line;
+        line.reserve(length);
+        line += *s;
         ++s;
         while (s != e) {
-            oss << std::string(spaces + (reminder ? 1 : 0) , ' ') << *s;
+            line += std::string(spaces + (reminder ? 1 : 0) , ' ');
+            line += *s;
             ++s;
             if (reminder)
                 reminder--;
         }
-        return oss.str();
+        return line;
     }
 
     vector<string> fullJustify(vector<string>& words, int maxWidth) {
@@ -37,7 +39,7 @@ public:
             
             // commit line
             if (it_last != words.end()) 
-                result.push_back(std::move(merge_line(it_first, it_last, maxWidth)));
+                result.push_back(merge_line(it_first, it_last, maxWidth));
             else { // last line -> no justification
                 std::string line {*it_first};
                 while (++it_first != it_last) {
