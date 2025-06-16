@@ -40,7 +40,8 @@ public:
                         val_to_new_node[n->val] = new Node(n->val);
                     }
                     neighbors.push_back(val_to_new_node[n->val]);
-                    que.push_back(n);
+                    if (!visited[n->val])
+                        que.push_back(n);
                 }
                 val_to_new_node[old->val]->neighbors = std::move(neighbors);
             }
