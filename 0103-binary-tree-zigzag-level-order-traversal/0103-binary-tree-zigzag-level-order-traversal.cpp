@@ -15,8 +15,10 @@ public:
         if (!root) return {};
         std::deque<TreeNode*> que;
         que.push_back(root);
+        
         vector<vector<int>> result;
         bool left_to_right = true;
+        
         while(!que.empty()) {
             int level_size = que.size();
             vector<int> level;
