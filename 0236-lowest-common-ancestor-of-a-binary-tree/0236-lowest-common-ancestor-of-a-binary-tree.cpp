@@ -7,6 +7,13 @@
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
+enum class METHOD {
+    PATHS,
+    RECURSIVE
+};
+
+constexpr METHOD ALGO = METHOD::RECURSIVE;
+
 class Solution {
     std::vector<std::vector<TreeNode*>> paths;
     bool p_found;
@@ -42,7 +49,18 @@ public:
         q_found = false;
     }
 
-    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+    TreeNode* lowestCommonAncestorRecursive(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if (!root || root == p || root == q)
+            return root;
+
+        TreeNode* left = lowestCommonAncestorRecursive(root->left, p, q);
+        TreeNode* right = lowestCommonAncestorRecursive(root->right, p, q);
+
+        if (left && right) return root;
+        return left ? left : right;
+    }
+
+    TreeNode* lowestCommonAncestorPaths(TreeNode* root, TreeNode* p, TreeNode* q) {
         init();
         std::vector<TreeNode*> path {root};
         find(path, p , q);
@@ -55,5 +73,15 @@ public:
                 break;
         }
         return paths[0][idx];
+    }
+
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) { 
+        if constexpr(ALGO == METHOD::RECURSIVE) {
+            return lowestCommonAncestorRecursive(root, p, q);
+        } else if constexpr(ALGO == METHOD::PATHS) {
+            return lowestCommonAncestorPaths(root, p, q);
+        } else {
+            static_assert([](){return false;}, "Unknown algorithm");
+        }
     }
 };
