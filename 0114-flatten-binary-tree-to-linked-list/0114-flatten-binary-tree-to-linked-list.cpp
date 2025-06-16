@@ -9,17 +9,15 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
+
+#ifdef VECTOR_SOLUTION
 class Solution {
     std::vector<TreeNode*> in_order;
 public:
-    Solution(){
-        in_order.reserve(2000);
-    }
-
     void place_in_order(TreeNode* node) {
         if (node) {
             in_order.push_back(node);
-            place_in_order(node->left);            
+            place_in_order(node->left);
             place_in_order(node->right);
         }
     }
@@ -39,3 +37,21 @@ public:
         fix_linking();
     }
 };
+
+#else
+
+class Solution {
+    TreeNode* prev = nullptr;
+public:
+    void flatten(TreeNode* root) {
+        if (!root) return;
+        flatten(root->right);
+        flatten(root->left);
+        root->right = prev;
+        root->left = nullptr;
+        prev = root;
+    }
+};
+
+
+#endif //VECTOR_SOLUTION
