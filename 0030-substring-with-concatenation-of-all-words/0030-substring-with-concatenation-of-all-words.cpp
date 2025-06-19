@@ -1,3 +1,5 @@
+// Solved using sliding window technique
+
 class Solution {
     std::unordered_map<std::string, int> get_word_counter(vector<string>& words) {
         std::unordered_map<std::string, int> result;
