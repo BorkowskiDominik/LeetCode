@@ -7,7 +7,7 @@ class Solution {
     }
 public:
     vector<int> findSubstring(string s, vector<string>& words) {
-        if (words.empty()) return {};
+        if (words.empty() || s.empty()) return {};
         std::vector<int> indexes;
         auto word_counter = get_word_counter(words);
         int words_num = words.size();
