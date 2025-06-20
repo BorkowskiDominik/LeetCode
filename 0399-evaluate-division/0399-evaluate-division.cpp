@@ -23,17 +23,17 @@ class Solution {
         return graph_map;
     }
 
-    bool bfs(const std::string& start,
+    bool dfs(const std::string& start,
             const std::string& end,
             const unordered_map<std::string, Node>& graph_map,
-            std::unordered_set<std::string> visited,
+            std::unordered_set<std::string>& visited,
             double& factor) {
         if (start == end) return true;
         visited.insert(start);
         for (const auto&[id, cost] : graph_map.at(start).neighbours) {
             if (visited.contains(id)) continue;
             factor *= cost;
-            if (bfs(id, end, graph_map, visited, factor)) return true;
+            if (dfs(id, end, graph_map, visited, factor)) return true;
             factor /= cost;
         }
         visited.erase(start);
@@ -45,7 +45,7 @@ class Solution {
         double result = 1;
         if (query[0] == query[1]) return 1.0;
         std::unordered_set<std::string> visited {};
-        if (!bfs(query[0], query[1], graph_map, visited, result)) return -1;
+        if (!dfs(query[0], query[1], graph_map, visited, result)) return -1;
         return result;
     }
 
