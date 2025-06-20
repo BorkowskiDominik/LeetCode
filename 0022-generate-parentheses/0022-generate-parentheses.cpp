@@ -24,6 +24,7 @@ public:
 
     vector<string> generateParenthesis(int n) {
         vector<string> combinations;
+        combinations.reserve(1 << n);
         string current; 
         current.reserve(2*n);
         generate_combinations(n, 0, 0, current, combinations);
