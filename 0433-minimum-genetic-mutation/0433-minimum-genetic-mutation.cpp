@@ -43,15 +43,16 @@ public:
         std::queue<string> bfs_queue;
         std::unordered_set<std::string> visited;
         bfs_queue.push(startGene);
+        visited.insert(startGene);
         int cnt = 0;
         while (!bfs_queue.empty()) {
             int size = bfs_queue.size();
             for (int i = 0; i < size; ++i) {
                 const auto el = bfs_queue.front(); bfs_queue.pop();
-                visited.insert(el);
                 if (el == endGene) return cnt;
                 for (const auto& n : graph.at(el)) {
                     if (visited.contains(n)) continue;
+                    visited.insert(n);
                     bfs_queue.push(n);
                 }
             }
