@@ -23,6 +23,7 @@ class Solution {
         return graph_map;
     }
 
+    [[maybe_unused]]
     bool dfs(const std::string& start,
             const std::string& end,
             const unordered_map<std::string, Node>& graph_map,
@@ -39,7 +40,8 @@ class Solution {
         visited.erase(start);
         return false;
     }
-    
+
+    [[maybe_unused]]
     bool bfs(const std::string& start,
             const std::string& end,
             const unordered_map<std::string, Node>& graph_map,
