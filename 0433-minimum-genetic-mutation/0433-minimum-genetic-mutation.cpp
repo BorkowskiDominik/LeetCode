@@ -13,6 +13,7 @@ ostream& operator<<(ostream& o, const unordered_map<string, unordered_set<string
 constexpr int NO_RESULT = -1;
 
 class Solution {
+    using TGraphMap = unordered_map<string, unordered_set<string>>;
 public:
     int count_differences(const string& s1, const string& s2) {
         int diffs {};
@@ -23,7 +24,7 @@ public:
         return diffs;
     }
 
-    unordered_map<string, unordered_set<string>> build_map(const vector<string>& bank) {
+    TGraphMap build_map(const vector<string>& bank) {
         unordered_map<string, std::unordered_set<string>> graph_map;
         for (int i = 0; i < bank.size(); ++i) {            
             const auto& s1 = bank[i];
@@ -38,20 +39,18 @@ public:
         return graph_map;
     }
 
-    int bfs(const string& startGene, const string& endGene,
-        unordered_map<string,unordered_set<string>> graph,
-        std::unordered_set<std::string> visited
-    ) {
+    int bfs(const string& startGene, const string& endGene, const TGraphMap& graph) {
         std::queue<string> bfs_queue;
+        std::unordered_set<std::string> visited;
         bfs_queue.push(startGene);
         int cnt = 0;
         while (!bfs_queue.empty()) {
             int size = bfs_queue.size();
             for (int i = 0; i < size; ++i) {
-                const auto& el = bfs_queue.front(); bfs_queue.pop();
+                const auto el = bfs_queue.front(); bfs_queue.pop();
                 visited.insert(el);
                 if (el == endGene) return cnt;
-                for (const auto& n : graph[el]) {
+                for (const auto& n : graph.at(el)) {
                     if (visited.contains(n)) continue;
                     bfs_queue.push(n);
                 }
@@ -66,9 +65,8 @@ public:
         bank.push_back(startGene);
         auto graph_map = build_map(bank);
         assert(graph_map.size());
-        cout << graph_map << endl;
+        // cout << graph_map << endl;
         if (!graph_map.contains(startGene) || !graph_map.contains(endGene)) return NO_RESULT;
-        std::unordered_set<std::string> visited;
-        return bfs(startGene, endGene, graph_map, visited);
+        return bfs(startGene, endGene, graph_map);
     }
 };
