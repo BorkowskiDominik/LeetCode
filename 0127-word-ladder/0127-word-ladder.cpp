@@ -1,6 +1,7 @@
+namespace {
 constexpr bool ON_THE_FLY = true;
 constexpr int NO_SOLUTION = 0;
-
+}
 
 class Solution {
     using TGraph = unordered_map<const string*, unordered_set<const string*>>;
@@ -65,6 +66,7 @@ class Solution {
         return NO_SOLUTION;
     }
 
+    [[maybe_unused]]
     int ladderLength_on_fly(const string& beginWord, const string& endWord, const vector<string>& wordList) {
         unordered_set<string> dict(wordList.begin(), wordList.end());
         if (!dict.count(endWord)) return 0;
