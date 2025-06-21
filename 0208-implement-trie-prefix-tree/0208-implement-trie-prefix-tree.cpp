@@ -7,7 +7,7 @@ class Trie {
 public:
     Trie(): head(std::make_unique<Node>()) {}
     
-    void insert(string word) {
+    void insert(const string& word) {
         Node* n = head.get();
         for (char c: word) {
             int idx = c - 'a';
