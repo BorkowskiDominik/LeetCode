@@ -10,7 +10,7 @@
  */
  
 enum class METHOD {STL, MERGE};
-constexpr auto ALGO = METHOD::MERGE;
+constexpr auto ALGO = METHOD::STL;
 
 ostream& operator<<(ostream& o, const std::vector<ListNode*>& v) {
     for (const auto& e : v) {
@@ -31,20 +31,24 @@ class Solution {
     }
 public:
     ListNode* sortListSTL(ListNode* head) {
-        std::vector<ListNode*> v;
+        if (!head || !head->next) return head;
         auto size = get_size(head);
-        v.reserve(size + 1);
+        std::vector<int> vals(size, 0);
+
         ListNode* it = head;
-        while(it) {
-            v.push_back(it);
+        for (size_t i = 0; i < size; ++i) {
+            vals[i] = it->val;
             it = it->next;
         }
-        std::sort(v.begin(), v.end(), [](const auto& p1, const auto& p2){ return p1->val < p2->val; });
-        v.push_back(nullptr);
-        for (int i = 0; i < v.size()-1; ++i) {
-            v[i]->next = v[i+1];
+
+        std::sort(vals.begin(), vals.end());
+        
+        it=head;
+        for (int i = 0; i < size; ++i) {
+            it->val = vals[i];
+            it = it->next;
         }
-        return v.front();
+        return head;
     }
 
     ListNode* sortListMerge(ListNode* head) {
