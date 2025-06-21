@@ -81,6 +81,7 @@ private:
     }
 
     inline bool should_prune(Trie::Node* n) {
+        if (!n) return true;
         if (n->is_terminal) return false;
         return std::all_of(n->children.begin(), n->children.end(), [](const auto& ptr){ return !ptr;});
     }
@@ -103,9 +104,10 @@ private:
             visited.insert(next);
             char c = board[next.x][next.y];
             current_word.push_back(c);
-            dfs(board, visited, current_word, next, n->get(c), solutions);
-            // if (should_prune(n))
-                // n->remove(c);
+            Trie::Node* child = n->get(c);
+            dfs(board, visited, current_word, next, child, solutions);
+            if (should_prune(child))
+                n->remove(c);
             current_word.pop_back();
             visited.erase(next);
         }
