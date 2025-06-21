@@ -12,7 +12,8 @@
 
 class Solution {
     TreeNode* sortedArrayToBST(const vector<int>& nums, size_t left, size_t right) {
-        if (left >= right) return nullptr;
+        if (left >= right) 
+            return nullptr;
         size_t middle = left + (right - left)/2;
         TreeNode* head = new TreeNode(nums[middle]);
         head->left  = sortedArrayToBST(nums, left, middle);
