@@ -37,32 +37,56 @@ public:
     }
 };
 */
+struct Range {
+    size_t x;
+    size_t y;
+    size_t size;
+};
+
 class Solution {
-    Node* _construct(const vector<vector<int>>& grid, size_t start_x, size_t start_y, size_t size) {
-        int value = grid[start_x][start_y];
-        bool split_required = false;
-        for (int i = start_x; i < start_x + size; ++i) {
-            for (int j = start_y; j < start_y + size; ++j) {
-                if (grid[i][j] != value) {
-                    split_required = true;
-                    break;
-                }
-            }
-            if (split_required) break;
-        }
-        Node* head = new Node(value, !split_required);
+    template<typename T>
+    using TVV = std::vector<std::vector<T>>;
+
+    Node* _construct(const TVV<int>& grid, const TVV<size_t>& prefix_sum, Range r) {
+        bool split_required = !is_homogeneous(grid, prefix_sum, r);
+        Node* head = new Node(grid[r.x][r.y], !split_required);
         if (split_required) {
-            auto child_size = size / 2;
-            head->topLeft     = _construct(grid, start_x             , start_y             , child_size); 
-            head->topRight    = _construct(grid, start_x             , start_y + child_size, child_size);
-            head->bottomLeft  = _construct(grid, start_x + child_size, start_y             , child_size);
-            head->bottomRight = _construct(grid, start_x + child_size, start_y + child_size, child_size);
+            auto q_size = r.size / 2;
+            head->topLeft     = _construct(grid, prefix_sum, {r.x         , r.y         , q_size}); 
+            head->topRight    = _construct(grid, prefix_sum, {r.x         , r.y + q_size, q_size});
+            head->bottomLeft  = _construct(grid, prefix_sum, {r.x + q_size, r.y         , q_size});
+            head->bottomRight = _construct(grid, prefix_sum, {r.x + q_size, r.y + q_size, q_size});
         }
         return head;
     }
 
+    inline bool is_homogeneous(const TVV<int>& grid, const TVV<size_t>& prefix_sum, const Range& r) {
+        size_t region_sum =   prefix_sum[r.x+r.size][r.y+r.size]
+                            + prefix_sum[r.x][r.y]
+                            - prefix_sum[r.x+r.size][r.y]
+                            - prefix_sum[r.x][r.y+r.size];
+
+        return region_sum == 0 || region_sum == r.size*r.size;
+    }
+
+    TVV<size_t> _generate_prefix_sum (const TVV<int>& grid) {
+        auto grid_size = grid.size();
+        TVV<size_t> p_sum(grid_size+1, vector<size_t>(grid_size+1, 0));
+        
+        for (size_t i = 0; i < grid_size; ++i) {
+            for (size_t j = 0; j < grid_size; ++j) {
+                p_sum[i+1][j+1] =  grid[i][j]
+                                + p_sum[i][j+1]
+                                + p_sum[i+1][j]
+                                - p_sum[i][j];
+            }
+        }
+        return p_sum;
+    }
+
 public:
-    Node* construct(const vector<vector<int>>& grid) {
-        return _construct(grid, 0, 0, grid.size());
+    Node* construct(const TVV<int>& grid) {
+        auto prefix_sum = _generate_prefix_sum(grid);
+        return _construct(grid, prefix_sum, {0, 0, grid.size()});
     }
 };
