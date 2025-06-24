@@ -89,7 +89,7 @@ class Solution {
                 if (!dp[j])
                     continue;
                 auto sv = string_view(s).substr(j, i-j);
-                if (dict.count(sv)) {
+                if (dict.contains(sv)) {
                     dp[i] = true;
                     break;
                 }
