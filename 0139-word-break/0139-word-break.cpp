@@ -52,7 +52,7 @@ struct Trie {
 };
 
 class Solution {
-    bool canConstruct(const string_view& view, const Trie& trie, const size_t start,  std::vector<int8_t>& cache) {
+    bool canConstruct(const string_view& view, const Trie& trie, const size_t start,  std::vector<int8_t>& cache) const {
         if (cache[start] != -1) return cache[start];
         int8_t result = 0;
         string_view s = view.substr(start, view.size()-start);
@@ -69,14 +69,14 @@ class Solution {
         return cache[start];
     }
 
-    bool _wordBreakTrie(string& s, vector<string>& wordDict) {
+    bool _wordBreakTrie(const string& s, vector<string>& wordDict) const {
         Trie trie;
         for_each(wordDict.begin(), wordDict.end(), [&trie](const auto& s){trie.insert(s);});
         std::vector<int8_t> cache(s.size(), -1);
         return canConstruct(s, trie, 0, cache);
     }
 
-    bool _wordBreakDpArray(std::string& s, vector<string>& wordDict) {
+    bool _wordBreakDpArray(const std::string& s, vector<string>& wordDict) const {
         int n = s.size();
 
         unordered_set<string_view> dict(wordDict.begin(), wordDict.end());
@@ -99,7 +99,7 @@ class Solution {
     }
 
 public:
-    bool wordBreak(string s, vector<string>& wordDict) {
+    bool wordBreak(const string& s, vector<string>& wordDict) const {
         if constexpr(ALGO == ALGORITHM::TRIE) {
             return _wordBreakTrie(s, wordDict); // Result: 60% - 100% runtime (Most often: 75%), Memory: 61%
         } else if constexpr(ALGO == ALGORITHM::DP_ARRAY) {
