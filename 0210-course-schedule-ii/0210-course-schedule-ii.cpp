@@ -4,6 +4,7 @@ public:
         vector<int> indegree(numCourses);
         vector<vector<int>> adj(numCourses);
         vector<int> order;
+        order.reserve(numCourses);
         
         for (const auto& p: prerequisites) {
             int from = p[1], to = p[0];
