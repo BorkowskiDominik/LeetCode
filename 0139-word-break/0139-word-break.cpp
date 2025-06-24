@@ -1,5 +1,5 @@
 enum class ALGORITHM {TRIE, DP_ARRAY};
-constexpr auto ALGO = ALGORITHM::TRIE;
+constexpr auto ALGO = ALGORITHM::DP_ARRAY;
 
 struct Trie {
     struct Node {
@@ -101,9 +101,9 @@ class Solution {
 public:
     bool wordBreak(const string& s, vector<string>& wordDict) const {
         if constexpr(ALGO == ALGORITHM::TRIE) {
-            return _wordBreakTrie(s, wordDict); // Result: 60% - 100% runtime (Most often: 75%), Memory: 61%
+            return _wordBreakTrie(s, wordDict); // Result: Runtime: 60% - 100% (Most often: 75%), Memory: 61%
         } else if constexpr(ALGO == ALGORITHM::DP_ARRAY) {
-            return _wordBreakDpArray(s, wordDict);
+            return _wordBreakDpArray(s, wordDict); // Result: Runtime: 70%-100% (Most often: 100%), Memory: 90.04%
         }
         return false;
     }
