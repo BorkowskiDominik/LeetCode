@@ -1,3 +1,6 @@
+enum class ALGORITHM {TRIE, DP_ARRAY};
+constexpr auto ALGO = ALGORITHM::TRIE;
+
 struct Trie {
     struct Node {
         std::array<std::unique_ptr<Node>, 26> children;
@@ -66,11 +69,42 @@ class Solution {
         return cache[start];
     }
 
-public:
-    bool wordBreak(string s, vector<string>& wordDict) {
+    bool _wordBreakTrie(string& s, vector<string>& wordDict) {
         Trie trie;
         for_each(wordDict.begin(), wordDict.end(), [&trie](const auto& s){trie.insert(s);});
         std::vector<int8_t> cache(s.size(), -1);
         return canConstruct(s, trie, 0, cache);
+    }
+
+    bool _wordBreakDpArray(std::string& s, vector<string>& wordDict) {
+        int n = s.size();
+
+        unordered_set<string_view> dict(wordDict.begin(), wordDict.end());
+
+        vector<bool> dp(n+1, false);
+        dp[0] = true;
+
+        for (int i = 1; i <=n; ++i) {
+            for (int j = 0; j < i; ++j) {
+                if (!dp[j])
+                    continue;
+                auto sv = string_view(s).substr(j, i-j);
+                if (dict.count(sv)) {
+                    dp[i] = true;
+                    break;
+                }
+            }
+        }
+        return dp[n];
+    }
+
+public:
+    bool wordBreak(string s, vector<string>& wordDict) {
+        if constexpr(ALGO == ALGORITHM::TRIE) {
+            return _wordBreakTrie(s, wordDict); // Result: 60% - 100% runtime (Most often: 75%), Memory: 61%
+        } else if constexpr(ALGO == ALGORITHM::DP_ARRAY) {
+            return _wordBreakDpArray(s, wordDict);
+        }
+        return false;
     }
 };
