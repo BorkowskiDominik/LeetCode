@@ -2,19 +2,19 @@ class Solution {
 public:
     double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
         size_t total_size = nums1.size() + nums2.size();
-        int median_left = 0, median_right = 0;
-        double left, right;
+        int med_left_idx = 0, med_right_idx = 0;
+        double med_left {}, med_right {};
 
         if (total_size % 2) {
-            median_left = median_right = total_size / 2; // just round down
+            med_left_idx = med_right_idx = total_size / 2; // just round down
         } else {
-            median_right = total_size / 2; 
-            median_left = median_right - 1; 
+            med_right_idx = total_size / 2; 
+            med_left_idx = med_right_idx - 1; 
         }
         auto it1 = nums1.begin(); 
         auto it2 = nums2.begin();
         decltype(it1) current;
-        for (int i = 0; i <= median_right; ++i) {
+        for (int i = 0; i <= med_right_idx; ++i) {
             if (it1 == nums1.end()) {
                 current = it2++;
             } else if (it2 == nums2.end()) {
@@ -27,15 +27,14 @@ public:
                     current = it2++;
                 }
             }
-            if (i == median_left) {
-                left = *current;
+            if (i == med_left_idx) {
+                med_left = *current;
             }
-            if (i == median_right) {
-                right = *current;
-                break;
+            if (i == med_right_idx) {
+                med_right = *current;
             }
         }
 
-        return (left + right) / 2;
+        return (med_left + med_right) / 2;
     }
 };
