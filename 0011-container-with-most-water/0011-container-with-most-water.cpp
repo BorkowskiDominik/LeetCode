@@ -6,7 +6,7 @@ public:
         while(left < right) {
             int distance = (right - left);
             max_volume = std::max(max_volume, distance * std::min(*left, *right));
-            if (*left <= *right)
+            if (*left <= *right) 
                 ++left;
             else
                 --right;
