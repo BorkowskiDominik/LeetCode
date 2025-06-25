@@ -1,5 +1,5 @@
 enum class ALGORITHM {ONE_D, TWO_D};
-constexpr auto ALGO = ALGORITHM::TWO_D;
+constexpr auto ALGO = ALGORITHM::ONE_D;
 
 class Solution {
 public:
