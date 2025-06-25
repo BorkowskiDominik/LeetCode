@@ -7,11 +7,11 @@ public:
 
         for (int i = 0; i < n; ++i)
             projects.emplace_back(capital[i], profits[i]);
+        
         sort(projects.begin(), projects.end());
 
         priority_queue<int> available;
         int idx = 0;
-
         while (k--) {
             while (idx < n && projects[idx].first <= w) {
                 available.push(projects[idx].second);
