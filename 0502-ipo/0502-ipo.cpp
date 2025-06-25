@@ -3,6 +3,8 @@ public:
     int findMaximizedCapital(int k, int w, vector<int>& profits, vector<int>& capital) {
         int n = profits.size();
         vector<pair<int, int>> projects;
+        projects.reserve(n);
+
         for (int i = 0; i < n; ++i)
             projects.emplace_back(capital[i], profits[i]);
         sort(projects.begin(), projects.end());
