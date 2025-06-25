@@ -1,7 +1,7 @@
 class Solution {
 public:
     int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
-        // if (obstacleGrid[0][0] == 1) return 0;
+        if (obstacleGrid[0][0] == 1) return 0;
         // auto print = [](const auto& v){for (auto e: v) cout << e << " "; cout << endl;};
 
         std::vector<int> dp (obstacleGrid.front().size(), 0);
