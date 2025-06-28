@@ -16,6 +16,7 @@ public:
     }
 
     // First attempt to solve the issue
+    [[maybe_unused]]
     int longestOnesFirstAttempt(vector<int>& nums, int k) {
         auto n_size = nums.size();
         if (k == n_size) return k;
