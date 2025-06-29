@@ -2,6 +2,7 @@ class Solution {
 public:
     string mergeAlternately(string word1, string word2) {
         string result;
+       
         const auto w1_size = word1.size(), w2_size = word2.size();
         result.reserve(w1_size + w2_size);
         
