@@ -5,6 +5,7 @@ class Solution {
     using TVPII = std::vector<std::pair<int, int>>;
     using TVPIIt = std::vector<std::pair<int, int>>::iterator;
 
+    [[maybe_unused]]
     void _printMissing (TVPIIt beg, TVPIIt end) {
         for ( ; beg < end; ++beg) {
             cout << "<" << beg->first << "," << beg->second << "> ";
@@ -12,6 +13,7 @@ class Solution {
         cout << endl;
     }
 
+    [[maybe_unused]]
     void _printBoard (const TVVC& board) {
         for (const auto& v : board){
             for (char c: v)
