@@ -1,4 +1,5 @@
 class Solution {
+    [[maybe_unused]]
     int sumDigits(int n) {
         int res = 0;
         while (n) {
