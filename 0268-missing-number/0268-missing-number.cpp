@@ -1,15 +1,9 @@
 class Solution {
 public:
     int missingNumber(vector<int>& nums) {
-        int maxNum = nums.size();
-        vector<bool> used(maxNum, false);
-        for (auto n : nums) {
-            used[n] = true;
-        }
-        for (int i = 0; i < used.size(); ++i) {
-            if (!used[i])
-                return i;
-        }
-        return maxNum;
+        int n = nums.size();
+        int expectedSum = n * (n + 1) / 2;
+        int actualSum = accumulate(nums.begin(), nums.end(), 0);
+        return expectedSum - actualSum;
     }
 };
