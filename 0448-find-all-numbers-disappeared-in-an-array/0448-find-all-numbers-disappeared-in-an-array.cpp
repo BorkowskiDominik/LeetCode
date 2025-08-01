@@ -1,14 +1,16 @@
 class Solution {
 public:
     vector<int> findDisappearedNumbers(vector<int>& nums) {
-        vector<int> missing;
-        missing.resize(nums.size()+1);
-        for (int i = 0; i < missing.size(); ++i)
-            missing[i] = i;
-        for (auto n : nums) {
-            missing[n] = 0;
+        for (int i = 0; i < nums.size(); ++i) {
+            int index = abs(nums[i]) - 1;
+            nums[index] = -abs(nums[index]);  // zaznacz widziane liczby
         }
-        std::erase_if(missing, [](int i){return !i;});
-        return missing;
+
+        vector<int> result;
+        for (int i = 0; i < nums.size(); ++i) {
+            if (nums[i] > 0)
+                result.push_back(i + 1);  // liczby, które nie zostały oznaczone
+        }
+        return result;
     }
 };
