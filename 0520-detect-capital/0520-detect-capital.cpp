@@ -13,6 +13,5 @@ public:
             word.end(),
             [](unsigned char c) { return std::isupper(c); }
         );
-        
     }
 };
