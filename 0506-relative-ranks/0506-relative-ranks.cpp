@@ -6,7 +6,7 @@ constexpr std::array<const char*, 3> PODIUM {
 
 
 class Solution {
-    string position_to_str(int i) {
+    inline string position_to_str(int i) {
         if (i <= 0) return "-1";
         if (i > 3) return to_string(i);
         return PODIUM[i-1];
@@ -14,24 +14,23 @@ class Solution {
 
 public:
     vector<string> findRelativeRanks(vector<int>& score) {
-        vector<string> ranks;
-        ranks.resize(score.size());
+        vector<string> ranks(score.size());
         
-        std::vector<int> priority;
-        priority.reserve(score.size());
-
+        std::vector<int> indices;
+        indices.reserve(score.size());
         for (int i = 0; i < score.size(); ++i) {
-            priority.push_back(i);
+            indices.push_back(i);
         }
+
         std::sort(
-            priority.begin(),
-            priority.end(),
+            indices.begin(),
+            indices.end(),
             [&score](int a, int b){
                 return score[a] > score[b];
             }
         );
-        for (int i = 0; i < priority.size(); ++i) {
-            ranks[priority[i]] = position_to_str(i+1);
+        for (int i = 0; i < indices.size(); ++i) {
+            ranks[indices[i]] = position_to_str(i+1);
         }
         return ranks;
     }
